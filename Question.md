@@ -1,75 +1,37 @@
-A city Bus is a Ring Route Bus which runs in a circular fashion.That is ,Bus once starts at the 
-source Bus Stop ,halts at each Bus stop in its Route and at the end it reaches the source
-Bus Stop again.
+Alice and her friends are playing a game of verbal Kho-Kho. Alice is acting as a mediator, and the rest of the N friends are seated on N chairs, one each.
+Alice starts by providing a paper with a single-digit number to the friend present at number 1. Let’s denote friends by F, where F will be of size N. F[1]…F[N] represents friends seated respectively. After receiving the paper with a digit, F[1] will enact and try to tell F[2] without speaking. Similarly, F[2] will communicate to the next person i.e., F[3]. This continues until the last person F[N] understands the digit. Finally, the last person will write the digit on a separate paper and give it to Alice to compare both papers. If the digits are similar then, Alice will give a T-shirt to each friend. However, if the digits do not match, Alice will ask each friend’s digits, and she will offer the T-shirts to only those who understood the digits correctly.
 
-If there are n number of stops and if the bus starts at Bus stop 1, then after nth Bus Stop the 
-next stop in the Route will be Bus Stop number 1 always .
+Given N number of friends and digit array D, denoting the digit understood by each friend F. finds out how many of Alice’s friends have not enacted well OR did not understand the enactment by the previous friend correctly.
 
-If there are n stops ,there will be n paths .One path connects two stops. Distances (in meters) 
-for all paths in Ring Route is given in array Path[] as given below
+Example 1:
+3 -> N, number of friends
+4 4 4 – array D. denoting digit understanding by N friends
+Output:
+0
+Explanation:
+All of them understood the digits correctly.
 
-Path = [800,600,750,900,1400,1200,1100,1500]
-
-Question : 
-Fare is determined based on the distance covered from source to destination stop as Distance 
-between Input Source and Destination Stops can be measured by looking at values in array Path[] 
-and fare can be calculated as per following criteria: 
-
-If d =1000 meters, then fare=5 INR 
-
-NOTE : 
-
-When calculating fare for others, the calculated fare containing any fraction value should be 
-ceiled. 
-
-For example, for distance 900n when fare initially calculated is 4.5 which must be ceiled to 5.
-
-Path is circular in function. Value at each index indicates distance till current stop from the 
-previous one. And each index position can be mapped with values at same index in 
-Bus Stops [] array, which is a string array holding abbreviation of names for all stops as-
-
-THANERAILWAYSTN = TH 
-NITINCOMPANYJUNCTION = NI 
-GAONDEVI = GA 
-CADBURRYJUNCTION = CA 
-ICEFACTROY = IC 
-LUISWADI = LU 
-HARINIWASCIRCLE = HA 
-TEENHATHΝΑΚΑ = ΤΕ
-
-Given, n=8, where n is number of total Bus Stops. 
-
-BusStops = ["TH","GA","IC","HA","TE","LU","NI","CA"] 
-
-Write a code with function getFare(String Source, String Destination) 
-which take Input as source and destination stops(in the format 
-containing first two characters of the Name of the Bus Stop) and calculate and 
-return travel fare.
+Example 2:
+5
+1 2 3 2 2
+Output:
+4
+Explanation:
+1st, 2nd, 3rd, and 4th friends could not enact OR understand the enactment.
 
 ```python
 
-import math
-
-def getFare(Source: str, Destination: str) -> int:
-    BusStops = ["TH", "GA", "IC", "HA", "TE", "LU", "NI", "CA"]
-    Path = [800, 600, 750, 900, 1400, 1200, 1100, 1500]
+def count_misunderstood_friends(N, D):
+    correct_digit = D[0]  # The first friend receives the correct digit
     
-    # Find indices of source and destination
-    try:
-        src_index = BusStops.index(Source)
-        dest_index = BusStops.index(Destination)
-    except ValueError:
-        return -1  # Invalid stop name
+    # Count friends who did not understand correctly
+    misunderstood_count = sum(1 for i in range(1, N) if D[i] != correct_digit)
     
-    # Calculate distance in the circular route
-    if src_index <= dest_index:
-        distance = sum(Path[src_index:dest_index])
-    else:
-        distance = sum(Path[src_index:]) + sum(Path[:dest_index])
-    
-    # Calculate fare
-    fare = math.ceil(distance / 1000 * 5)
-    return fare
+    return misunderstood_count
 
 # Example Usage
-print(getFare("TH", "LU"))  # Example call
+N1, D1 = 3, [4, 4, 4]
+print(count_misunderstood_friends(N1, D1))  # Output: 0
+
+N2, D2 = 5, [1, 2, 3, 2, 2]
+print(count_misunderstood_friends(N2, D2))  # Output: 4
