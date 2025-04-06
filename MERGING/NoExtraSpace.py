@@ -26,13 +26,36 @@
 # The result of the merge is [1].
 # Note that because m = 0, there are no elements in nums1. The 0 is only there to ensure the merge result can fit in nums1.
 
-arr1 = [1,4,8,10]
-n = 4
-arr2 = [2,3,9]
+from typing import List
+
+class Solution:
+    def merge(self, nums1: List[int], m: int, nums2: List[int], n: int) -> None:
+        """
+        Do not return anything, modify nums1 in-place instead.
+        """
+        # Start from the end
+        p1 = m - 1  # Last element in the original nums1
+        p2 = n - 1  # Last element in nums2
+        p = m + n - 1  # Last position in nums1
+
+        while p1 >= 0 and p2 >= 0:
+            if nums1[p1] > nums2[p2]:
+                nums1[p] = nums1[p1]
+                p1 -= 1
+            else:
+                nums1[p] = nums2[p2]
+                p2 -= 1
+            p -= 1
+
+        # If there are remaining elements in nums2
+        while p2 >= 0:
+            nums1[p] = nums2[p2]
+            p2 -= 1
+            p -= 1
+
+nums1 = [1,2,3,0,0,0]
 m = 3
-for i in range(n):
-    for j in range(m):
-        if arr1[i]<arr2[j]:
-            arr1[i],arr2[j] = arr2[j],arr1[i]
-print(arr1)
-print(arr2)
+nums2 = [2,5,6]
+n = 3
+Solution().merge(nums1, m, nums2, n)
+print(nums1)  # Output: [1,2,2,3,5,6]
