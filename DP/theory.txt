@@ -1,0 +1,10 @@
+dynamic programming
+2 methods 
+1. Tabulation or bottom-up approach 
+2. Memorization or top-down approach
+
+**space optimization is much important in Tabulation**
+
+Example-1 fibanocci number
+0,1,1,2,3,5,.........
+rucursion relation = > f(n) = f(n-1)+f(n-2)
